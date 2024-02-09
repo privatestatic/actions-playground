@@ -5,7 +5,7 @@
 
     <groupId>com.github</groupId>
     <artifactId>actions-playground</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>actions-playground</name>
     <!-- FIXME change it to the project's website -->
@@ -15,7 +15,7 @@
         <url>https://github.com/privatestatic/${project.artifactId}</url>
         <connection>scm:git:https://github.com/privatestatic/${project.artifactId}.git</connection>
         <developerConnection>scm:git:https://github.com/privatestatic/${project.artifactId}.git</developerConnection>
-        <tag>actions-playground-0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <licenses>
