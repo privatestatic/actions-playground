@@ -1,13 +1,8 @@
 name: Release
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Release version'
-        required: true
-      nextVersion:
-        description: 'Next version after release (-SNAPSHOT will be added automatically)'
-        required: true
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -19,11 +14,24 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Cache local Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Print given versions
-        run: echo Given version is ${{ github.event.inputs.version }} and next version is ${{ github.event.inputs.nextVersion }}
+          server-id: github
+      - name: Configure Git user
+        run:
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+      - name: Publish JAR
+        run: ./mvn -B release:prepare release:perform
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

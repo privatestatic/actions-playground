@@ -13,3 +13,5 @@ resources/sources_*.list
 .vscode/
 release.properties
 *.code-workspace
+pom.xml.releaseBackup
+*.backup
